@@ -1,0 +1,498 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"] - Kungumam</title>
+    <link rel="shortcut icon" href="~/assets/images/Lo.png" type="image/x-icon" />
+    <link rel="icon" href="~/assets/images/Lo.png" type="image/x-icon" />
+    <!-- Bootstrap -->
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- slimscroll -->
+    <link href="~/assets/css/jquery.slimscroll.css" rel="stylesheet">
+    <!-- project -->
+    <link href="~/assets/css/project.css" rel="stylesheet">
+    <!-- flotCart css -->
+    <link href="~/assets/css/flotCart.css" rel="stylesheet">
+    <!-- jvectormap -->
+    <link href="~/assets/css/jqvmap.css" rel="stylesheet">
+
+
+
+    <!-- dataTables -->
+    <link href="~/assets/css/buttons.dataTables.min.css" rel="stylesheet">
+    <link href="~/assets/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/css/responsive.dataTables.min.css" rel="stylesheet">
+    <link href="~/assets/css/fixedHeader.dataTables.min.css" rel="stylesheet">
+
+
+    <!-- Fontes -->
+    <link href="~/assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/assets/css/simple-line-icons.css" rel="stylesheet">
+    <link href="~/assets/css/ameffectsanimation.css" rel="stylesheet">
+    <link href="~/assets/css/buttons.css" rel="stylesheet">
+    <!-- animate css -->
+    <link href="~/assets/css/animate.css" rel="stylesheet">
+    <!-- top nev css -->
+    <link href="~/assets/css/page-header.css" rel="stylesheet">
+    <!-- adminui main css -->
+    <link href="~/assets/css/main.css" rel="stylesheet">
+
+    <!-- morris -->
+    <link href="~/assets/css/morris.css" rel="stylesheet">
+
+    <!-- red theme css -->
+    <link href="~/assets/css/red.css" rel="stylesheet">
+    <!-- media css for responsive  -->
+    <link href="~/assets/css/main.media.css" rel="stylesheet">
+    <!-- AdminUI demo css-->
+    <link href="~/assets/css/adminUIdemo.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/select2.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/assets/css/bootstrap-select.min.css" />
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="page-header-fixed ">
+    @{
+        string strName = "Admin";
+        if (HttpContextAccessor.HttpContext.Request.Cookies["UserName"] != null || HttpContextAccessor.HttpContext.Request.Cookies["UserName"] != "")
+        {
+            strName = HttpContextAccessor.HttpContext.Request.Cookies["UserName"];
+        }
+    }
+    <div class="page-header navbar navbar-fixed-top">
+        <!-- BEGIN HEADER INNER -->
+        <div class="page-header-inner ">
+            <!-- BEGIN LOGO -->
+            <div class="page-logo"> <a href="@Url.Action("Index", "Home")"> <img class="logo-default" alt="logo" src="~/assets/images/MurusuLogo.png" height="50"> </a> </div>
+            <div class="library-menu"> <span class="one">-</span> <span class="two">-</span> <span class="three">-</span> </div><div class="top-nev-mobile-togal"><i class="glyphicon glyphicon-cog"></i></div>
+            <!-- END LOGO -->
+            <div class="top-menu">
+                <!--  TOP NAVIGATION MENU -->
+                <div class="hor-menu  hor-menu-light hidden-sm hidden-xs">
+                    <ul class="nav navbar-nav pull-left" style="padding-left: 500px;padding-top:10px;">
+                        <li>
+
+                            <h3><span style="color:white"> ! WELCOME ADMIN !  </span>	</h3>
+                        </li>
+                    </ul>
+
+                </div>
+                @* <div class="hor-menu  hor-menu-light hidden-sm hidden-xs">
+                <ul class="nav navbar-nav">
+                <!-- DOC: Remove data-hover="megamenu-dropdown" and data-close-others="true" attributes below to disable the horizontal opening on mouse hover -->
+                <li class="classic-menu-dropdown active"> <a href="index.html"><i class="icon-user fa-fw"></i></a> </li>
+
+
+                <li class="mega-menu-dropdown mega-menu-full hover-initialized"> <a class="dropdown-toggle hover-initialized" href="javascript:;">Mega <i class="fa fa-angle-down"></i> </a>
+                <ul class="dropdown-menu">
+                <li>
+                <!-- Content container to add padding -->
+                <div class="mega-menu-content ">
+                <div class="row">
+                <div class="col-md-3">
+                <h4>Pages <span class="label label-warning">14</span></h4>
+                <div class="row">
+                <div class="col-md-6">
+                <ul class="mega-menu-submenu">
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="profile_2.html">Profile-2</a></li>
+                <li><a href="contacts.html">Contacts</a></li>
+                <li><a href="contacts_2.html">Contacts-2</a></li>
+                <li><a href="search_results.html">Search results</a></li>
+                <li></li>
+                <li></li>
+                </ul>
+                </div>
+                </div>
+                </div>
+                <div class="col-md-4">
+                <h4>Analysis</h4>
+                <span id="sparkNev"></span>
+                </div>
+                </div>
+                </div>
+                </li>
+                </ul>
+                </li>
+                <li class="classic-menu-dropdown"> <a data-close-others="true" data-hover="megamenu-dropdown" href="javascript:;" class="hover-initialized"> Classic <i class="fa fa-angle-down"></i> </a>
+                <ul class="dropdown-menu pull-left">
+                <li>
+                <a href="javascript:;"> <i class="fa fa-bookmark-o"></i> Section 1 </a>
+                </li>
+                <li>
+                <a href="javascript:;"> <i class="fa fa-user"></i> Section 2 </a>
+                </li>
+                <li>
+                <a href="javascript:;"> <i class="fa fa-puzzle-piece"></i> Section 3 </a>
+                </li>
+                <li>
+                <a href="javascript:;"> <i class="fa fa-gift"></i> Section 4 </a>
+                </li>
+                <li>
+                <a href="javascript:;"> <i class="fa fa-table"></i> Section 5 </a>
+                </li>
+                <li class="dropdown-submenu">
+                <a href="javascript:;"> <i class="fa fa-envelope-o"></i> More options </a>
+                <ul class="dropdown-menu">
+                <li> <a href="javascript:;"> Second level link </a> </li>
+
+                <li> <a href="index.html"> Second level link </a> </li>
+                <li> <a href="index.html"> Second level link </a> </li>
+                <li> <a href="index.html"> Second level link </a> </li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                </ul>
+
+                <form method="GET" action="search_results.html" class="search-form search-form-expanded">
+                <div class="input-group">
+                <input name="query" placeholder="Search..." class="form-control" type="text">
+                <span class="input-group-btn"> <a class="btn submit" href="javascript:;"> <i class="icon-magnifier"></i> </a> </span>						</div>
+                </form>
+                </div> *@
+                <!--  TOP NAVIGATION MENU -->
+
+                <ul class="nav navbar-nav pull-right">
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle count-info"> <i class="fa fa-envelope"></i> <span class="badge badge-info">6</span> </a>
+                        <ul class="dropdown-menu dropdown-messages menuBig">
+                            <li>
+                                <div class="dropdown-messages-box">
+                                    <a class="pull-left" href="profile.html"> <img src="assets/images/teem/placeholders.jpg" class="img-circle" alt="image"> </a>
+                                    <div class="media-body">
+                                        <small class="pull-right">46h ago</small> <strong>Mike Loreipsum</strong> started following <strong>Olivia Wenscombe</strong>. <br>
+                                        <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="dropdown-messages-box">
+                                    <a class="pull-left" href="profile.html"> <img src="assets/images/teem/placeholders.jpg" class="img-circle" alt="image"> </a>
+                                    <div class="media-body ">
+                                        <small class="pull-right text-navy">5h ago</small> <strong> Alex Smith </strong> started following <strong>Olivia Wenscombe</strong>. <br>
+                                        <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="dropdown-messages-box">
+                                    <a class="pull-left" href="profile.html"> <img src="assets/images/teem/placeholders.jpg" class="img-circle" alt="image"> </a>
+                                    <div class="media-body ">
+                                        <small class="pull-right">23h ago</small> <strong>Olivia Wenscombe</strong> love <strong>Sophie </strong>. <br>
+                                        <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="text-center link-block">
+                                    <a href="mailbox.html"> <i class="fa fa-envelope"></i> <strong>Read All Messages</strong> </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle count-info"> <i class="fa fa-bell"></i> <span class="badge badge-primary">8</span> </a>
+                        <ul class="dropdown-menu dropdown-alerts menuBig">
+                            <li>
+                                <a href="mailbox.html">
+                                    <div> <i class="fa fa-envelope fa-fw"></i> You have 16 messages <span class="pull-right text-muted small">4 minutes ago</span> </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="profile.html">
+                                    <div> <i class="fa fa-twitter fa-fw"></i> 3 New Followers <span class="pull-right text-muted small">12 minutes ago</span> </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="grid_options.html">
+                                    <div> <i class="fa fa-upload fa-fw"></i> Server Rebooted <span class="pull-right text-muted small">4 minutes ago</span> </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="text-center link-block">
+                                    <a href="mailbox.html"> <strong>See All Alerts</strong> <i class="fa fa-angle-right"></i> </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- START USER LOGIN DROPDOWN -->
+                    <li class="dropdown dropdown-user">
+                        <a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="javascript:;"> <img src="~/assets/images/Admin.png" class="img-circle" alt="" width='30'> <span class="username username-hide-on-mobile"><h3> Admin </h3></span> <i class="fa fa-angle-down"></i> </a>
+                        <ul class="dropdown-menu dropdown-menu-default">
+                            @* <li>
+                            <a href="profile.html"> <i class="icon-user"></i> My Profile </a>
+
+                            </li>
+                            <li>
+                            <a href="profile_2.html"> <i class="icon-user"></i> Profile-2 </a>
+                            </li>
+                            <li>
+                            <a href="calendar.html"> <i class="icon-calendar"></i> My Calendar </a>
+                            </li>
+                            <li>
+                            <a href="mailbox.html"> <i class="icon-envelope-open"></i> My Inbox <span class="badge badge-danger"> 3 </span> </a>
+                            </li>
+                            <li>
+                            <a href="dashboard2.html"> <i class="icon-rocket"></i> My Tasks <span class="badge badge-success"> 7 </span> </a>
+                            </li>
+                            <li class="divider"> </li>
+                            <li>
+                            <a href="lockscreen.html"> <i class="icon-lock"></i> Lock Screen </a>
+                            </li> *@
+                            <li>
+                                <a href="@Url.ActionLink("Login","Account")"> <i class="icon-key"></i> Log Out </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- END USER LOGIN DROPDOWN -->
+                </ul>
+            </div>
+            <!-- END TOP NAVIGATION MENU -->
+        </div>
+        <!-- END HEADER INNER -->
+    </div>
+    <div class="clearfix"> </div>
+    <div class="page-container">
+        <!-- Start page sidebar wrapper -->
+        <div class="page-sidebar-wrapper">
+            <div class="page-sidebar">
+                <ul class="page-sidebar-menu  page-header-fixed ">
+                    <li class="sidebar-search-wrapper">
+                        <!-- START RESPONSIVE SEARCH FORM -->
+                        <form class="sidebar-search  " action="search_results.html" method="POST">
+                            <a href="javascript:;" class="remove"> <i class="icon-close"></i> </a>
+
+                        </form>
+                        <!-- END RESPONSIVE SEARCH FORM -->
+                    </li>
+                    <li class="nav-item active open">
+                        <a class="nav-link nav-toggle" href="javascript:;"> <i class="icon fa fa-home"></i> <span class="title">Home</span> <span class="arrow"></span> </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item ">
+                                <a class="nav-link" href="@Url.Action("Index", "Home")">  <i class="fa fa-shopping-cart"></i><span class="title">Home</span> </a>
+                            </li>
+                        </ul>
+                    </li>
+                   <li class="nav-item active open">
+                        <a class="nav-link nav-toggle" href="javascript:;"> <i class="icon fa fa-user-o"></i> <span class="title">Admin</span> <span class="arrow"></span> </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Magazine", "Magazine")"> <span class="title"> Magazine </span> </a>
+                            </li>
+                        </ul>
+                        <ul class="sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("ListCategory", "Category")"> <span class="title"> New Category </span> </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item active open">
+                        <a class="nav-link nav-toggle" href="javascript:;"> <i class="icon fa fa-newspaper-o"></i> <span class="title">Wrapper</span> <span class="arrow"></span> </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("ListWrapper", "Wrapper")"> <span class="title"> New Wrapper </span> </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item active open">
+                        <a class="nav-link nav-toggle" href="javascript:;"> <i class="icon fa fa-newspaper-o"></i> <span class="title">Road Block</span> <span class="arrow"></span> </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("ListRoadBlock", "RoadBlock")"> <span class="title"> New RoadBlock </span> </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item active open">
+                        <a class="nav-link nav-toggle" href="javascript:;"> <i class="icon fa fa-newspaper-o"></i> <span class="title">Sub Category</span> <span class="arrow"></span> </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("ListSubCategory", "SubCategory")"> <span class="title"> New SubCategory </span> </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    </li>
+                    <li class="nav-item active open">
+                        <a class="nav-link nav-toggle" href="javascript:;"> <i class="icon fa fa-newspaper-o"></i> <span class="title">Gallery</span> <span class="arrow"></span> </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Gallery", "Gallery")"> <span class="title"> New Gallery </span> </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item active open">
+                        <a class="nav-link nav-toggle" href="javascript:;"> <i class="icon fa fa-newspaper-o"></i> <span class="title">EBook</span> <span class="arrow"></span> </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("ListEBook", "EBook")"> <span class="title"> New EBook </span> </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    @* <li class="nav-item active open">
+                        <a class="nav-link nav-toggle" href="javascript:;"> <i class="icon fa fa-picture-o"></i> <span class="title">Images</span> <span class="arrow"></span> </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("ListAdangapa", "Adangapa")"> <span class="title"> Adangapa Image </span> </a>
+                            </li>
+                        </ul>
+                        <ul class="sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("ListNewImage", "NewImage")"> <span class="title"> Album Image </span> </a>
+                            </li>
+                        </ul>
+                        <ul class="sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("ListNewAlbum", "NewAlbum")"> <span class="title"> Gallery Image</span> </a>
+                            </li>
+                        </ul>
+                        <ul class="sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("ListCinema", "Cinema")"> <span class="title"> Cinema Gallery</span> </a>
+                            </li>
+                        </ul>
+                        <ul class="sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("ListRelex", "Relex")"> <span class="title"> Relex Image</span> </a>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li class="nav-item active open">
+                        <a class="nav-link nav-toggle" href="javascript:;"> <i class="icon fa fa-file-movie-o"></i> <span class="title">Video Images</span> <span class="arrow"></span> </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("ListVideo", "Video")"> <span class="title"> Video Image</span> </a>
+                            </li>
+                        </ul>
+                    </li>*@
+                    @*<li class="nav-item">
+                    <a class="nav-link nav-toggle" href="javascript:;"> <i class="fa fa-map"></i> <span class="title">Maps</span> <span class="arrow"></span> </a>
+                    </li> *@
+                </ul>
+
+            </div>
+        </div>
+        <!-- End page sidebar wrapper -->
+        <!-- Start page content wrapper -->
+        <div class="page-content-wrapper animated fadeInRight">
+            <div class="page-content">
+                <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+                <script src="~/assets/js/vendor/jquery.min.js"></script>
+                <!-- bootstrap js -->
+                <script src="~/assets/js/vendor/bootstrap.min.js"></script>
+                <!--  morris Charts  -->
+
+
+                <script type="text/javascript">
+
+
+
+                    function isNumeric(keyCode) {
+                        return ((keyCode >= 48 && keyCode <= 57) || keyCode == 37 || keyCode == 39 || keyCode == 46 || keyCode == 8 || keyCode == 9 || (keyCode >= 96 && keyCode <= 105));
+                    }
+
+                    function isNumeric2(keyCode, e) {
+                        //alert(keyCode);
+                        return ((keyCode >= 48 && keyCode <= 57) || keyCode == 37 || keyCode == 39 || keyCode == 46 || keyCode == 8 || keyCode == 9 || keyCode == 190 || keyCode == 110 || (keyCode >= 96 && keyCode <= 105));
+                    }
+
+                    function checkLength(el) {
+                        if (el.value.length != 10) {
+                            alert("Length must be exactly 10 characters")
+                        }
+                    }
+                </script>
+
+                <script type="text/javascript" src="~/assets/js/vendor/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+                <script type="text/javascript" src="~/assets/js/vendor/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+
+
+                <script src="~/assets/js/vendor/chartJs/Chart.bundle.js"></script>
+                <script src="~/assets/js/dashboard1.js"></script>
+                <!-- dataTables-->
+                <script type="text/javascript" src="~/assets/js/vendor/jquery.dataTables.js"></script>
+                <script type="text/javascript" src="~/assets/js/vendor/dataTables.bootstrap.min.js"></script>
+                <script type="text/javascript" src="~/assets/js/vendor/jquery-ui.js" charset="UTF-8"></script>
+                <!-- slimscroll js -->
+                <script type="text/javascript" src="~/assets/js/vendor/jquery.slimscroll.js"></script>
+                <!-- pace js -->
+                <script src="~/assets/js/vendor/pace/pace.min.js"></script>
+                <script src="~/assets/js/vendor/select2.min.js"></script>
+                <script src="~/assets/js/vendor/bootstrap-select.min.js"></script>
+                <!-- Sparkline -->
+                <script src="~/assets/js/vendor/jquery.sparkline.min.js"></script>
+                <!-- main js -->
+                <script src="~/assets/js/main.js"></script>
+                <!-- AdminUI demo js-->
+                <script src="~/assets/js/adminUIdemo.js"></script>
+                <script type="text/javascript">
+                    $('.form_date').datetimepicker({
+                        //language:  'fr',
+                        weekStart: 1,
+                        todayBtn: 1,
+                        autoclose: 1,
+                        todayHighlight: 1,
+                        startView: 2,
+                        forceParse: 0,
+                        showMeridian: 1
+                    });
+                    $('.to_date').datetimepicker({
+                        //   language:  'fr',
+                        weekStart: 1,
+                        todayBtn: 1,
+                        autoclose: 1,
+                        todayHighlight: 1,
+                        startView: 2,
+                        minView: 2,
+                        endDate: new Date(),
+                        forceParse: 0
+
+                    });
+
+
+                </script>
+                @await RenderSectionAsync("Scripts", required: false)
+                @RenderBody()
+
+
+                <!-- start footer -->
+                <div class="footer">
+                    @* <div class="pull-right">
+                    <ul class="list-inline">
+                    <li><a title="" href="index.html">Dashboard</a></li>
+                    <li><a title="" href="mailbox.html"> Inbox </a></li>
+                    <li><a title="" href="blog.html">Blog</a></li>
+                    <li><a title="" href="contacts.html">Contacts</a></li>
+                    </ul>
+                    </div> *@
+                    <div> <strong>Copyright</strong> ICanD Company &copy; 2024 </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Go top -->
+    <a href="#" class="scrollup"><i class="fa fa-chevron-up"></i></a>
+    <!-- Go top -->
+</body>
+</html>
+

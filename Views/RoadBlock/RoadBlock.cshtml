@@ -1,0 +1,194 @@
+﻿@model Kungumam.Models.RoadBlock
+
+@{
+    ViewData["Title"] = "RoadBlock";
+}
+<style>
+
+    .mandatory {
+        color: red;
+        position: relative;
+        top: 2px;
+        left: 5px;
+    }
+</style>
+<script type="text/javascript">
+    @if (TempData["notice"] != null)
+    {
+        @:alert('@TempData["notice"]');
+    }
+</script>
+
+<div class="row wrapper border-bottom page-heading">
+    <div class="col-lg-12">
+
+        <ol class="breadcrumb">
+            <li> <a href="#">Home</a> </li>
+            <li> <a>RoadBlock</a> </li>
+            <li class="active"> <strong> RoadBlock </strong> </li>
+        </ol>
+    </div>
+</div>
+<div class="wrapper-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="widgets-container">
+                    <h5 style="font-size:14px">RoadBlock</h5>
+                    <hr>
+                    @using (Html.BeginForm("RoadBlock", "RoadBlock", FormMethod.Post, new { @id = "form1", @enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+
+                                        <br />   <label for="inputName3" class="col-sm-4 control-label"> Url <label class="mandatory">*</label></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(C => C.url, new { @id = "url", @class = "form-control", @TabIndex = 2, @size = "32" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <br /> <div class="form-group">
+                                        <label for="formFile" class="col-sm-2 control-label">Image<label class="mandatory">*</label></label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" type="file" name="file" multiple />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <br /> <label for="datePicker" class="col-sm-4 control-label">Issue Date<label class="mandatory">*</label></label>
+                                        <div class="input-group date form_date col-sm-8" data-date="" data-date-format="dd-M-yyyy">
+                                            @Html.TextBoxFor(C => C.IssueDate, new { @id = "IssueDate", @class = "form-control", @TabIndex = 2, @size = "32" })
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <br /> <label for="datePicker" class="col-sm-4 control-label">End Date<label class="mandatory">*</label></label>
+                                        <div class="input-group date to_date col-sm-8" data-date="" data-date-format="dd-M-yyyy">
+                                            @Html.TextBoxFor(C => C.end_dt, new { @id = "end_dt", @class = "form-control", @TabIndex = 2, @size = "32" })
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="height:30px;"></div>
+                            <div class="col-lg-5"></div>
+                            <div class="text-center">
+                                <button type="submit" name="submit" class="btn btn-primary" id="btnSave" value="Save" tabindex="18">Save</button>
+                                <button class="btn btn-warning" type="reset">Reset</button>
+                                <a button class="btn btn-danger" type="submit" href="@Url.Action("ListRoadBlock", "RoadBlock")">Cancel</a>
+                            </div>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('._select').select2();
+    });
+</script>
+<script>
+    $('.to_date').datetimepicker({
+        //   language:  'fr',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        endDate: new Date(),
+        forceParse: 0
+
+    });
+    $('.form_date').datetimepicker({
+        //   language:  'fr',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        endDate: new Date(),
+        forceParse: 0
+    }).on('changeDate', function (selected) {
+        var minDate = new Date(selected.date.valueOf());
+        $('.to_date').datetimepicker('setStartDate', minDate);
+
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#btnSave').click(function (e) {
+            var isValid = true;
+            if (document.getElementById("url").value == "") {
+                isValid = false;
+                $(url).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Enter Url");
+                return false;
+            }
+            else {
+                $(url).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("IssueDate").value == "") {
+                isValid = false;
+                $(IssueDate).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Select IssueDate");
+                return false;
+            }
+            else {
+                $(IssueDate).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (document.getElementById("end_dt").value == "") {
+                isValid = false;
+                $(end_dt).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Select EndDate");
+                return false;
+            }
+            else {
+                $(end_dt).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+            if (isValid == false)
+                e.preventDefault();
+        });
+
+    });
+</script>
