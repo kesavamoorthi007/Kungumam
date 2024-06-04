@@ -8,6 +8,7 @@ namespace Kungumam.Interface.Admin
 {
 	public interface IMagazineService
 	{
+        DataTable GetMagazine();
         DataTable GetAllMagazineService();
         string MagazineCRUD(Magazine Cy);
 	}

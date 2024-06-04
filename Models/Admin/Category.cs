@@ -19,11 +19,15 @@ namespace Kungumam.Models
     }
     public class Categorygrid
     {
+        internal string? chooseMagazine;
+        internal string? category;
+
         public long id { get; set; }
         public string bookid { get; set; }
         public string cname { get; set; }
         public string tamilcat { get; set; }
         public string editrow { get; set; }
         public string delrow { get; set; }
+        public string? ChooseMagazine { get; internal set; }
     }
 }
