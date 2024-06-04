@@ -1,31 +1,33 @@
-﻿using Kungumam.Interface;
-using Kungumam.Interface.Admin;
+﻿using Kungumam.Interface.Admin;
 using Kungumam.Models;
 using Kungumam.Services;
+using Kungumam.Services.Admin;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
 
 namespace Kungumam.Controllers.Admin
 {
-    public class CategoryController : Controller
+    public class EBook2Controller : Controller
     {
-        ICategoryService CategoryService;
+
+        IEBook2Service EBook2Service;
         IConfiguration? _configuratio;
         private string? _connectionString;
         DataTransactions datatrans;
-        public CategoryController(ICategoryService _CategoryService, IConfiguration _configuratio)
+        public EBook2Controller(IEBook2Service _EBook2Service, IConfiguration _configuratio)
         {
-            CategoryService = _CategoryService;
+            EBook2Service = _EBook2Service;
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
         }
-        public IActionResult Category(string id)
+        public IActionResult EBook2(string id)
         {
-            Category br = new Category();
+            EBook2 br = new EBook2();
+
             br.ChooseMagazinelst = BindMagazine();
 
-            if (id == null)
+           if (id == null)
             {
 
             }
@@ -36,34 +38,34 @@ namespace Kungumam.Controllers.Admin
             return View(br);
 
         }
-        public IActionResult ListCategory()
+        public IActionResult ListEBook2()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult Category(Category Cy, string id)
+        public ActionResult EBook2(EBook2 Cy, string id)
         {
 
             try
             {
                 Cy.ID = id;
-                string Strout = CategoryService.CategoryCRUD(Cy);
+                string Strout = EBook2Service.EBook2CRUD(Cy);
                 if (string.IsNullOrEmpty(Strout))
                 {
                     if (Cy.ID == null)
                     {
-                        TempData["notice"] = "Category Inserted Successfully...!";
+                        TempData["notice"] = "EBook2 Inserted Successfully...!";
                     }
                     else
                     {
-                        TempData["notice"] = "Category Updated Successfully...!";
+                        TempData["notice"] = "EBook2 Updated Successfully...!";
                     }
-                    return RedirectToAction("ListCategory");
+                    return RedirectToAction("ListEBook2");
                 }
 
                 else
                 {
-                    ViewBag.PageTitle = "Edit Category";
+                    ViewBag.PageTitle = "Edit EBook2";
                     TempData["notice"] = Strout;
                     //return View();
                 }
@@ -77,16 +79,18 @@ namespace Kungumam.Controllers.Admin
 
             return View(Cy);
         }
+
         public List<SelectListItem> BindMagazine()
         {
             try
             {
-                DataTable dtDesg = CategoryService.GetMagazine();
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
-                for (int i = 0; i < dtDesg.Rows.Count; i++)
-                {
-                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["book_name"].ToString(), Value = dtDesg.Rows[i]["book_id"].ToString() });
-                }
+                lstdesg.Add(new SelectListItem() { Text = "Thozhi", Value = "1" });
+                lstdesg.Add(new SelectListItem() { Text = "Thozhi Supplementary", Value = "2" });
+                lstdesg.Add(new SelectListItem() { Text = "Anmegapalan Book 1", Value = "3" });
+                lstdesg.Add(new SelectListItem() { Text = "Anmegapalan Book 2", Value = "4" });
+
+
                 return lstdesg;
             }
             catch (Exception ex)
@@ -94,12 +98,12 @@ namespace Kungumam.Controllers.Admin
                 throw ex;
             }
         }
-        public ActionResult MyListCategorygrid(string strStatus)
+        public ActionResult MyListEBook2grid(string strStatus)
         {
-            List<Categorygrid> Reg = new List<Categorygrid>();
+            List<EBook2grid> Reg = new List<EBook2grid>();
             DataTable dtUsers = new DataTable();
             strStatus = strStatus == "" ? "Y" : strStatus;
-            dtUsers = CategoryService.GetAllCategory(strStatus);
+            dtUsers = EBook2Service.GetAllEBook2(strStatus);
             for (int i = 0; i < dtUsers.Rows.Count; i++)
             {
 
@@ -107,23 +111,22 @@ namespace Kungumam.Controllers.Admin
                 string EditRow = string.Empty;
 
 
-                EditRow = "<a href=Category?id=" + dtUsers.Rows[i]["cat_id"].ToString() + "><img src='../Images/editing-icon-vector.jpg' alt='Edit' width='30' /></a>";
-                DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["cat_id"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate' width='20' /></a>";
+                EditRow = "<a href=ebook?id=" + dtUsers.Rows[i]["news_id"].ToString() + "><img src='../Images/editing-icon-vector.jpg' alt='Edit' width='30' /></a>";
+                DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["news_id"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate' width='20' /></a>";
 
 
-                Reg.Add(new Categorygrid
+                Reg.Add(new EBook2grid
                 {
-                    id = Convert.ToInt64(dtUsers.Rows[i]["cat_id"].ToString()),
-                    chooseMagazine = dtUsers.Rows[i]["book_id"].ToString(),
-                    category = dtUsers.Rows[i]["cat_id"].ToString(),
-                    cname = dtUsers.Rows[i]["ctmne"].ToString(),
-                    tamilcat = dtUsers.Rows[i]["Tamil_cat"].ToString(),
+                    id = Convert.ToInt64(dtUsers.Rows[i]["news_id"].ToString()),
+                    book = dtUsers.Rows[i]["book_id"].ToString(),
+                    url = dtUsers.Rows[i]["url"].ToString(),
+                    issueDate = dtUsers.Rows[i]["AddedDateFormatted"].ToString(),
+                    endDate = dtUsers.Rows[i]["AddedDateFormatted1"].ToString(),
                     editrow = EditRow,
                     delrow = DeleteRow,
 
                 });
             }
-
             return Json(new
             {
                 Reg
@@ -133,17 +136,22 @@ namespace Kungumam.Controllers.Admin
         public ActionResult DeleteMR(string tag, int id)
         {
 
-            string flag = CategoryService.StatusDeleteMR(tag, id);
+            string flag = EBook2Service.StatusDeleteMR(tag, id);
             if (string.IsNullOrEmpty(flag))
             {
 
-                return RedirectToAction("ListCategory");
+                return RedirectToAction("List EBook2");
             }
             else
             {
                 TempData["notice"] = flag;
-                return RedirectToAction("ListCategory");
+                return RedirectToAction("List EBook2");
             }
         }
+
     }
-}
+
+
+ }
+
+    

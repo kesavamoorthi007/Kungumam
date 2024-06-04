@@ -2,6 +2,7 @@
 using Kungumam.Models;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
 
 namespace Kungumam.Controllers
@@ -14,15 +15,16 @@ namespace Kungumam.Controllers
 		DataTransactions datatrans;
 		public MagazineController(IMagazineService _MagazineService, IConfiguration _configuratio)
 		{
-			MagazineService = MagazineService;
+			MagazineService = _MagazineService;
 			_connectionString = _configuratio.GetConnectionString("MySqlConnection");
 			datatrans = new DataTransactions(_connectionString);
 		}
 		public IActionResult Magazine(string id)
 		{
 			Magazine br = new Magazine();
+            br.ChooseMagazinelst = BindMagazine();
 
-			if (id == null)
+            if (id == null)
 			{
 
 			}
@@ -39,7 +41,24 @@ namespace Kungumam.Controllers
 			return View();
 		}
 		[HttpPost]
-		public ActionResult Magazine(Magazine Cy, string id)
+        public List<SelectListItem> BindMagazine()
+        {
+            try
+            {
+                DataTable dtDesg = MagazineService.GetMagazine();
+                List<SelectListItem> lstdesg = new List<SelectListItem>();
+                for (int i = 0; i < dtDesg.Rows.Count; i++)
+                {
+                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["book_name"].ToString(), Value = dtDesg.Rows[i]["book_id"].ToString() });
+                }
+                return lstdesg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public ActionResult Magazine(Magazine Cy, string id)
 		{
 
 			try

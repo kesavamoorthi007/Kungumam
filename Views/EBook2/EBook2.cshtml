@@ -1,7 +1,7 @@
-﻿@model Kungumam.Models.Magazine
+﻿@model Kungumam.Models.EBook2
 
 @{
-    ViewData["Title"] = "Magazine";
+    ViewData["Title"] = "EBook2";
 }
 <style>
 
@@ -18,14 +18,15 @@
         @:alert('@TempData["notice"]');
     }
 </script>
+<script src="/ckeditor/ckeditor.js" type="text/javascript"></script>
 
 <div class="row wrapper border-bottom page-heading">
     <div class="col-lg-12">
 
         <ol class="breadcrumb">
             <li> <a href="#">Home</a> </li>
-            <li> <a>Admin</a> </li>
-            <li class="active"> <strong> Magazine </strong> </li>
+            <li> <a>EBook2</a> </li>
+            <li class="active"> <strong> EBook2</strong> </li>
         </ol>
     </div>
 </div>
@@ -34,9 +35,9 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="widgets-container">
-                    <h5 style="font-size:14px">Magazine</h5>
+                    <h5 style="font-size:14px">EBook2</h5>
                     <hr>
-                    @using (Html.BeginForm("Magazine", "Magazine", FormMethod.Post))
+                    @using (Html.BeginForm("EBook2", "EBook2", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
                         <form>
@@ -52,27 +53,17 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
-                                <div class="col-lg-7">
-
+                                <div class="col-md-6">
                                     <div class="form-group">
 
-                                        <br><label for="inputName3" class="col-sm-4 control-label">Magazine<label class="mandatory">*</label></label>
+                                        <br />   <label for="inputName3" class="col-sm-4 control-label"> Url <label class="mandatory">*</label></label>
                                         <div class="col-sm-8">
-                                            @Html.TextBoxFor(C => C.MagazineName, new { @id = "txtMagazineName", @class = "form-control", @TabIndex = 1 })
-                                            @Html.HiddenFor(C => C.ID)
-                                        </div>
+                                            @Html.TextBoxFor(C => C.url, new { @id = "url", @class = "form-control", @TabIndex = 2, @size = "32" })
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div style="height:30px;"></div>
-                            <div class="col-lg-5"></div>
-                            <div class="text-center">
-                                <button type="submit" name="submit" class="btn btn-primary" id="btnSave" value="Save" tabindex="18">Save</button>
-                                <button class="btn btn-warning" type="reset">Reset</button>
-                                <a button class="btn btn-danger" type="submit" href="@Url.Action("ListCategory", "Category")">Cancel</a>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
@@ -94,6 +85,13 @@
                                     </div>
                                 </div>
                             </div>
+                            <div style="height:30px;"></div>
+                            <div class="col-lg-5"></div>
+                            <div class="text-center">
+                                <button type="submit" name="submit" class="btn btn-primary" id="btnSave" value="Save" tabindex="18">Save</button>
+                                <button class="btn btn-warning" type="reset">Reset</button>
+                                <a button class="btn btn-danger" type="submit" href="@Url.Action("ListEBook2", "EBook2")">Cancel</a>
+                            </div>
                         </form>
                     }
                 </div>
@@ -102,33 +100,57 @@
     </div>
 </div>
 <script>
+        $(function () {
+            $('._select').select2();
+        });
+    $('.to_date').datetimepicker({
+        //   language:  'fr',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        endDate: new Date(),
+        forceParse: 0
 
-    $(function () {
-        $('._select').select2();
     });
-                $(document).ready(function () {
-                    $('#btnSave').click(function (e) {
-                        var isValid = true;
-            if (document.getElementById("txtMagazineName").value == "") {
-                            isValid = false;
-                $(txtMagazineName).css({
-                                "border": "1px solid red",
-                                "background": "#FFCECE"
-                            });
+    $('.form_date').datetimepicker({
+        //   language:  'fr',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        endDate: new Date(),
+        forceParse: 0
+    }).on('changeDate', function (selected) {
+        var minDate = new Date(selected.date.valueOf());
+        $('.to_date').datetimepicker('setStartDate', minDate);
 
-                alert("Please Enter  Magazine Name");
-                            return false;
-                        }
-                        else {
-                $(txtMagazineName).css({
-                                "border": "",
-                                "background": ""
-                            });
-                        }
-
-                    if (isValid == false)
-                            e.preventDefault();
-                    });
-
-                });
+    });
 </script>
+<script>
+    $(document).ready(function () {
+        $('#btnSave').click(function (e) {
+            var isValid = true;
+            if (document.getElementById("ddlChooseMagazine").value == "") {
+                isValid = false;
+                $(ddlChooseMagazine).css({
+                    "border": "1px solid red",
+                    "background": "#FFCECE"
+                });
+
+                alert("Please Select ChoosMagazine");
+                return false;
+            }
+            else {
+                $(ddlChooseMagazine).css({
+                    "border": "",
+                    "background": ""
+                });
+            }
+</script>
+
+

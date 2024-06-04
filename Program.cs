@@ -22,6 +22,8 @@ internal class Program
         builder.Services.TryAddSingleton<ISubCategoryService, SubCategoryService>();
         builder.Services.TryAddSingleton<IGalleryService, GalleryService>();
         builder.Services.TryAddSingleton<IEBookService, EBookService>();
+        builder.Services.TryAddSingleton<IEBook2Service, EBook2Service>();
+        builder.Services.TryAddSingleton<IArticalService, ArticalService>();
 
 
         builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
