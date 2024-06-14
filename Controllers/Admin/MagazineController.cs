@@ -22,15 +22,22 @@ namespace Kungumam.Controllers
 		public IActionResult Magazine(string id)
 		{
 			Magazine br = new Magazine();
-            br.ChooseMagazinelst = BindMagazine();
+            //br.ChooseMagazinelst = BindMagazine();
 
-            if (id == null)
+			if (id == null)
 			{
 
 			}
 			else
 			{
-				
+				DataTable dt = new DataTable();
+				dt = MagazineService.GetEditMagazine(id);
+				if (dt.Rows.Count > 0)
+				{
+					br.MagazineName = dt.Rows[0]["book_name"].ToString();
+					br.ID = id;
+
+				}
 			}
 			return View(br);
 
@@ -41,23 +48,23 @@ namespace Kungumam.Controllers
 			return View();
 		}
 		[HttpPost]
-        public List<SelectListItem> BindMagazine()
-        {
-            try
-            {
-                DataTable dtDesg = MagazineService.GetMagazine();
-                List<SelectListItem> lstdesg = new List<SelectListItem>();
-                for (int i = 0; i < dtDesg.Rows.Count; i++)
-                {
-                    lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["book_name"].ToString(), Value = dtDesg.Rows[i]["book_id"].ToString() });
-                }
-                return lstdesg;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        //public List<SelectListItem> BindMagazine()
+        //{
+        //    try
+        //    {
+        //        DataTable dtDesg = MagazineService.GetMagazine();
+        //        List<SelectListItem> lstdesg = new List<SelectListItem>();
+        //        for (int i = 0; i < dtDesg.Rows.Count; i++)
+        //        {
+        //            lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["book_name"].ToString(), Value = dtDesg.Rows[i]["book_id"].ToString() });
+        //        }
+        //        return lstdesg;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
         public ActionResult Magazine(Magazine Cy, string id)
 		{
 
@@ -106,7 +113,7 @@ namespace Kungumam.Controllers
                 string EditRow = string.Empty;
 
 
-                EditRow = "<a href=Magazine?id=" + dtUsers.Rows[i]["book_id"].ToString() + "><img src='../Images/editing-icon-vector.jpg' alt='Edit' width='30' /></a>";
+                EditRow = "<a href=Magazine?id=" + dtUsers.Rows[i]["book_id"].ToString() + "><img src='../Images/edit.png' alt='Edit' width='30' /></a>";
 
 
                 Reg.Add(new Magazinegrid

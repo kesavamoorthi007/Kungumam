@@ -7,12 +7,23 @@ namespace Kungumam.Services.Admin
 {
     public class SubCategoryService : ISubCategoryService
     { 
+
         private readonly string _connectionString;
         DataTransactions datatrans;
         public SubCategoryService(IConfiguration _configuratio)
         {
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
+        }
+        public DataTable GetEditSubCategory(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT book_id,cat_id,subcat_id,sbctmne FROM sctegy where cat_id = '" + id + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
         }
         public DataTable GetMagazine()
         {
@@ -71,10 +82,10 @@ namespace Kungumam.Services.Admin
 
             return msg;
         }
-        public DataTable GetAllCategory(string id)
+        public DataTable GetAllCategory()
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT cat_id,book_id,ctmne FROM category Where book_id='" + id + "'";
+            SvSql = "SELECT cat_id,book_id,subcat_id FROM sctegy ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -119,6 +130,11 @@ namespace Kungumam.Services.Admin
                 throw ex;
             }
             return "";
+        }
+
+        public DataTable GetAllCategory(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

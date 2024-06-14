@@ -2,7 +2,6 @@
 using Kungumam.Interface;
 using Kungumam.Interface.Admin;
 using Kungumam.Models;
-using Kungumam.Models;
 using Kungumam.Services;
 using Kungumam.Services.Admin;
 using Microsoft.AspNetCore.Mvc;
@@ -27,8 +26,7 @@ namespace Kungumam.Controllers.Admin
         {
             SubCategory br = new SubCategory();
             br.ChooseMagazinelst = BindMagazine();
-            br.Categorylist = BindCategory("");
-
+            br.Categorylist = BindCategory();
             if (id == null)
             {
 
@@ -36,10 +34,28 @@ namespace Kungumam.Controllers.Admin
             else
             {
 
+                DataTable dt = new DataTable();
+                dt = SubCategoryService.GetEditSubCategory(id);
+                if (dt.Rows.Count > 0)
+                {
+                    br.ChooseMagazinelst = BindMagazine();
+                    br.ChooseMagazine = dt.Rows[0]["book_id"].ToString();
+                    br.Categorylist = BindCategory();
+                    br.Catageroy = dt.Rows[0]["ctmne"].ToString();
+                    br.SubCategeroy = dt.Rows[0]["sbctmne"].ToString();
+                    br.ID = id;
+
+                }
             }
             return View(br);
 
         }
+
+        private List<SelectListItem> BindCategory()
+        {
+            throw new NotImplementedException();
+        }
+
         public IActionResult ListSubCategory()
         {
             return View();
@@ -81,12 +97,12 @@ namespace Kungumam.Controllers.Admin
 
             return View(Cy);
         }
-        public JsonResult GetCategoryJSON(string supid)
-        {
-            SubCategory model = new SubCategory();
-            return Json(BindCategory(supid));
+        //public JsonResult GetCategoryJSON(string supid)
+        //{
+        //    SubCategory model = new SubCategory();
+        //    return Json(BindCategory(supid));
 
-        }
+        //}
         public List<SelectListItem> BindMagazine()
         {
             try
@@ -108,7 +124,7 @@ namespace Kungumam.Controllers.Admin
         {
             try
             {
-                     DataTable dtDesg = SubCategoryService.GetAllCategory(id);
+                DataTable dtDesg = SubCategoryService.GetAllCategory(id);
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
@@ -134,8 +150,8 @@ namespace Kungumam.Controllers.Admin
                 string EditRow = string.Empty;
 
 
-                EditRow = "<a href=SubCategory?id=" + dtUsers.Rows[i]["subcat_id"].ToString() + "><img src='../Images/editing-icon-vector.jpg' alt='Edit' width='30' /></a>";
-                DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["subcat_id"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate' width='20' /></a>";
+                EditRow = "<a href=SubCategory?id=" + dtUsers.Rows[i]["subcat_id"].ToString() + "><img src='../Images/edit.png' alt='Edit' width='20' /></a>";
+                DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["subcat_id"].ToString() + "><img src='../Images/trash.png' alt='Deactivate' width='20' /></a>";
 
 
                 Reg.Add(new SubCategorygrid

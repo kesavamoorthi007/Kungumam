@@ -15,6 +15,16 @@ namespace Kungumam.Services.Admin
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
         }
+        public DataTable GetEditEBook(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT book_id,ebook_id,url,issue_dt,end_dt FROM Book_url where ebook_id = '" + id + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
         public DataTable GetMagazine()
         {
             string SvSql = string.Empty;

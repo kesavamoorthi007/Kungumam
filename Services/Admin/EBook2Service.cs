@@ -1,4 +1,5 @@
-﻿using Kungumam.Interface.Admin;
+﻿using DocumentFormat.OpenXml.Drawing.Charts;
+using Kungumam.Interface.Admin;
 using Kungumam.Models;
 using System.Data;
 using System.Data.SqlClient;
@@ -14,11 +15,21 @@ namespace Kungumam.Services.Admin
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
         }
-        public DataTable GetMagazine()
+        public System.Data.DataTable GetEditEBook(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT book_id,cat_id,news_id,issue_dt,end_dt,url,img FROM ihtoebk where cat_id = '" + id + "'";
+            System.Data.DataTable dtt = new System.Data.DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public System.Data.DataTable GetMagazine()
         {
             string SvSql = string.Empty;
             SvSql = "select book_id,book_name from book where book_id <>'6' and book_id<>'8' and book_id<>'5' and flag='y'";
-            DataTable dtt = new DataTable();
+            System.Data.DataTable dtt = new System.Data.DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
             adapter.Fill(dtt);
@@ -63,18 +74,18 @@ namespace Kungumam.Services.Admin
             return msg;
         }
 
-        public DataTable GetAllEBook2(string strStatus)
+        public System.Data.DataTable GetAllEBook2(string strStatus)
         {
             string SvSql = string.Empty;
             if (strStatus == "Y" || strStatus == null)
             {
-                SvSql = "SELECT book_id,news_id,url,CONVERT(varchar, Book_url.issue_dt, 106) AS AddedDateFormatted,CONVERT(varchar, Book_url.end_dt, 106) AS AddedDateFormatted1 FROM ihtoebk WHERE flag ='y' ORDER BY news_id";
+                SvSql = "SELECT book_id, news_id, url, CONVERT(varchar, ihtoebk.issue_dt, 106) AS AddedDateFormatted, CONVERT(varchar, ihtoebk.end_dt, 106) AS AddedDateFormatted1 FROM ihtoebk WHERE flag = 'y' ORDER BY news_id";
             }
             else
             {
                 SvSql = "SELECT book_id,news_id,url,CONVERT(varchar, Book_url.issue_dt, 106) AS AddedDateFormatted,CONVERT(varchar, Book_url.end_dt, 106) AS AddedDateFormatted1 FROM ihtoebk WHERE flag ='N' ORDER BY news_id";
             }
-            DataTable dtt = new DataTable();
+            System.Data.DataTable dtt = new System.Data.DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
             adapter.Fill(dtt);
@@ -104,5 +115,9 @@ namespace Kungumam.Services.Admin
             return "";
         }
 
+        public System.Data.DataTable GetEditEBook2(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

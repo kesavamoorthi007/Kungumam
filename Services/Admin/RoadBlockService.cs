@@ -23,6 +23,26 @@ namespace Kungumam.Services
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
         }
+        public DataTable GetEditRoadBlock(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT rd_id,url,img,issue_dt,end_dt FROM rd_blk where url = '" + id + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetMagazine()
+        {
+            string SvSql = string.Empty;
+            SvSql = "select book_id,book_name from book";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
         public string RoadBlockCRUD(List<IFormFile> files, RoadBlock Cy)
         {
             string msg = "";
@@ -107,7 +127,8 @@ namespace Kungumam.Services
             adapter.Fill(dtt);
             return dtt;
         }
-     
+       
+
         public string StatusDeleteMR(string tag, int id)
         {
 

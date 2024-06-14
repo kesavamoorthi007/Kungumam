@@ -119,7 +119,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <br /> <label for="datePicker" class="col-sm-4 control-label">IssueDate<label class="mandatory">*</label></label>
@@ -138,7 +137,15 @@
                                         </div>
                                     </div>
                                 </div>
+                            <div style="height:30px;"></div>
+                            <div class="col-lg-5"></div>
+                            <div class="text-center">
+                                <button type="submit" name="submit" class="btn btn-primary" id="btnSave" value="Save" tabindex="18">Save</button>
+                                <button class="btn btn-warning" type="reset">Reset</button>
+                                <a button class="btn btn-danger" type="submit" href="@Url.Action("ListCategory", "Category")">Cancel</a>
                             </div>
+
+
                         </form>
                     }
                 </div>

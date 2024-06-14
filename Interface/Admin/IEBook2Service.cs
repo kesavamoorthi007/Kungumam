@@ -9,5 +9,6 @@ namespace Kungumam.Interface.Admin
 
         DataTable GetMagazine();
         DataTable GetAllEBook2(string strStatus);
+        DataTable GetEditEBook2(string id);
     }
 }

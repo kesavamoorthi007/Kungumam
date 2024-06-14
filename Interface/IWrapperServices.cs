@@ -12,5 +12,7 @@ namespace Kungumam.Interface
         string StatusDeleteMR(string tag, int id);
 
         DataTable GetMagazine();
+        DataTable GetEditWrapper(string id);
+     
     }
 }

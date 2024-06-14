@@ -22,6 +22,27 @@ namespace Kungumam.Services
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
         }
+        public DataTable GetEditWrapper(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT book_id,wrapper_id,book_wrapper,issue_dt,dt FROM book_wrapper where wrapper_id = '" + id + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+        public DataTable GetAllMagazineService()
+        {
+            string SvSql = string.Empty;
+            SvSql = "  select book_id,book_name from book ORDER BY book_id DESC ";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
+
         public string WrapperCRUD(List<IFormFile> files, Wrapper Cy)
         {
             string msg = "";
@@ -89,6 +110,16 @@ namespace Kungumam.Services
 
             return msg;
         }
+        public DataTable GetMagazine()
+        {
+            string SvSql = string.Empty;
+            SvSql = "select book_id,book_name from book";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
         public DataTable GetAllWrapper(string strStatus)
         {
             string SvSql = string.Empty;
@@ -100,16 +131,6 @@ namespace Kungumam.Services
             {
                 SvSql = "select book_id,wrapper_id,book_wrapper,CONVERT(varchar, book_wrapper.issue_dt, 106) AS AddedDateFormatted from book_wrapper where book_wrapper.flag='n' ORDER BY wrapper_id DESC ";
             }
-            DataTable dtt = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
-            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-            adapter.Fill(dtt);
-            return dtt;
-        }
-        public DataTable GetMagazine()
-        {
-            string SvSql = string.Empty;
-            SvSql = "select book_id,book_name from book";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);

@@ -11,8 +11,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Kungumam</title>
-	<link rel="shortcut icon" href="~/assets/images/Lo.png" type="image/x-icon" />
-	<link rel="icon" href="~/assets/images/Lo.png" type="image/x-icon" />
+	<link rel="shortcut icon" href="~/assets/images/KungumamLogo.png" type="image/x-icon" />
+	<link rel="icon" href="~/assets/images/KungumamLogo.png" type="image/x-icon" />
 	<!-- Bootstrap -->
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
 	<!-- slimscroll -->
@@ -44,11 +44,11 @@
         </script>
     }
 
-<body class="red-bg login">
+<body class="green-bg login">
 	<div class="middle-box text-center loginscreen ">
 		<div class="widgets-container">
 			<div>
-				<h1 class="logo-name"><img class="logo-default" alt="logo" src="assets/images/MurusuLogo.png"></h1>
+				<h1 class="logo-name"><img class="logo-default" alt="logo" src="assets/images/KuLogo.png" width="100px" height="50px"></h1>
 			</div>
 			<h3>Welcome to Kungumam</h3>
 			    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
@@ -63,7 +63,7 @@
 					@Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", @TabIndex = 3, @id = "Password" })
 					@*<input type="password" required="" placeholder="Password" class="form-control">*@
 				</div>
-					<button class="btn btn-danger block full-width  bottom15" type="submit">Login</button>
+					<button class="btn btn-info block full-width  bottom15" type="submit">Login</button>
 			@*	<a href="forgot_password.html"><small>Forgot password?</small></a>
 				<p class="text-muted text-center"><small>Do not have an account?</small></p>
 				<a href="register.html" class="btn btn-sm btn-white btn-block">Create an account</a>*@

@@ -28,7 +28,8 @@ namespace Kungumam.Controllers
         public IActionResult RoadBlock(string id)
         {
             RoadBlock br = new RoadBlock();
-          
+            //br.ChooseMagazinelst = BindMagazine();
+
 
 
             if (id == null)
@@ -37,16 +38,30 @@ namespace Kungumam.Controllers
             }
             else
             {
+                DataTable dt = new DataTable();
+                dt = RoadBlockService.GetEditRoadBlock(id);
+                if (dt.Rows.Count > 0)
+                {
+
+                    br.Url = dt.Rows[0]["url"].ToString();
+                    br.Image = dt.Rows[0]["img"].ToString();
+                    br.IssueDate = dt.Rows[0]["issue_dt"].ToString();
+                    br.end_dt = dt.Rows[0]["end_dt"].ToString();
+                    br.ID = id;
+
+
+                }
+                
 
             }
             return View(br);
-
         }
         public IActionResult ListRoadBlock()
         {
 
             return View();
         }
+
         [HttpPost]
         public ActionResult RoadBlock(List<IFormFile> file, RoadBlock Cy, string id)
         {
@@ -54,7 +69,7 @@ namespace Kungumam.Controllers
             try
             {
                 Cy.ID = id;
-                string Strout = RoadBlockService.RoadBlockCRUD(file,Cy);
+                string Strout = RoadBlockService.RoadBlockCRUD(file, Cy);
                 if (string.IsNullOrEmpty(Strout))
                 {
                     if (Cy.ID == null)
@@ -70,7 +85,7 @@ namespace Kungumam.Controllers
 
                 else
                 {
-                    ViewBag.PageTitle = "Edit Category";
+                    ViewBag.PageTitle = "Edit RoadBlock";
                     TempData["notice"] = Strout;
                     //return View();
                 }
@@ -84,8 +99,26 @@ namespace Kungumam.Controllers
 
             return View(Cy);
         }
-       
+        //public List<SelectListItem> BindMagazine()
+        //{
+        //    try
+        //    {
+        //        DataTable dtDesg = RoadBlockService.GetMagazine();
+        //        List<SelectListItem> lstdesg = new List<SelectListItem>();
+        //        for (int i = 0; i < dtDesg.Rows.Count; i++)
+        //        {
+        //            lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["book_name"].ToString(), Value = dtDesg.Rows[i]["book_id"].ToString() });
+        //        }
+        //        return lstdesg;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
+
         public ActionResult MyListRoadBlockgrid(string strStatus)
+
         {
             List<RoadBlockgrid> Reg = new List<RoadBlockgrid>();
             DataTable dtUsers = new DataTable();
@@ -98,8 +131,8 @@ namespace Kungumam.Controllers
                 string EditRow = string.Empty;
 
 
-                EditRow = "<a href=RoadBlock?id=" + dtUsers.Rows[i]["rd_id"].ToString() + "><img src='../Images/editing-icon-vector.jpg' alt='Edit' width='30' /></a>";
-                DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["rd_id"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate' width='20' /></a>";
+                EditRow = "<a href=RoadBlock?id=" + dtUsers.Rows[i]["rd_id"].ToString() + "><img src='../Images/edit.png' alt='Edit' width='20' /></a>";
+                DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["rd_id"].ToString() + "><img src='../Images/trash.png' alt='Deactivate' width='20' /></a>";
 
 
                 Reg.Add(new RoadBlockgrid
@@ -138,3 +171,5 @@ namespace Kungumam.Controllers
         }
     }
 }
+
+

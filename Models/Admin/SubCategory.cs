@@ -9,6 +9,7 @@ namespace Kungumam.Models
         {
             this.ChooseMagazinelst = new List<SelectListItem>();
             this.Categorylist = new List<SelectListItem>();
+     
 
         }
         public List<SelectListItem> ChooseMagazinelst;
@@ -23,6 +24,8 @@ namespace Kungumam.Models
     }
     public class SubCategorygrid
     {
+      
+
         public long id { get; set; }
         public string bookid { get; set; }
         public string category { get; set; }
@@ -30,5 +33,6 @@ namespace Kungumam.Models
         public string sbctmne { get; set; }
         public string editrow { get; set; }
         public string delrow { get; set; }
+       
     }
 }
