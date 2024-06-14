@@ -10,5 +10,7 @@ namespace Kungumam.Interface
         string RoadBlockCRUD(List<IFormFile> file, RoadBlock cy);
         DataTable GetAllRoadBlock(string strStatus);
         string StatusDeleteMR(string tag, int id);
+        DataTable GetMagazine();
+        DataTable GetEditRoadBlock(string id);
     }
 }

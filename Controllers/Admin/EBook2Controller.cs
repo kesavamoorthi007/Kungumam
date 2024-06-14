@@ -27,15 +27,28 @@ namespace Kungumam.Controllers.Admin
 
             br.ChooseMagazinelst = BindMagazine();
 
-           if (id == null)
+            if (id == null)
             {
 
             }
             else
             {
 
+                DataTable dt = new DataTable();
+                dt = EBook2Service.GetEditEBook2(id);
+                if (dt.Rows.Count > 0)
+                {
+                    br.ChooseMagazinelst = BindMagazine();
+                    br.ChooseMagazine = dt.Rows[0]["book_id"].ToString();
+                    br.url = dt.Rows[0]["url"].ToString();
+                    br.IssueDate = dt.Rows[0]["issue_dt"].ToString();
+                    br.EndDate = dt.Rows[0]["end_dt"].ToString();
+                    br.ID = id;
+
+
+                }
             }
-            return View(br);
+                return View(br);
 
         }
         public IActionResult ListEBook2()
@@ -111,8 +124,8 @@ namespace Kungumam.Controllers.Admin
                 string EditRow = string.Empty;
 
 
-                EditRow = "<a href=ebook?id=" + dtUsers.Rows[i]["news_id"].ToString() + "><img src='../Images/editing-icon-vector.jpg' alt='Edit' width='30' /></a>";
-                DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["news_id"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate' width='20' /></a>";
+                EditRow = "<a href=ebook?id=" + dtUsers.Rows[i]["news_id"].ToString() + "><img src='../Images/edit.png' alt='Edit' width='20' /></a>";
+                DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["news_id"].ToString() + "><img src='../Images/trash.png' alt='Deactivate' width='20' /></a>";
 
 
                 Reg.Add(new EBook2grid

@@ -4,11 +4,11 @@ namespace Kungumam.Models
 {
 	public class Magazine
 	{
-		public Magazine()
-		{
-			this.ChooseMagazinelst = new List<SelectListItem>();
-		}
-        public List<SelectListItem> ChooseMagazinelst { get; set; }
+			//public Magazine()
+			//{
+			//	this.ChooseMagazinelst = new List<SelectListItem>();
+			//}
+			//public List<SelectListItem> ChooseMagazinelst { get; set; }
         public string ChooseMagazine { get; set; }
 
         public string ID { get; set; }

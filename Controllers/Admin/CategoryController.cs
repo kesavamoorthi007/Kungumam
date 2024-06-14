@@ -28,10 +28,21 @@ namespace Kungumam.Controllers.Admin
             if (id == null)
             {
 
+
             }
             else
             {
+                DataTable dt = new DataTable();
+                dt = CategoryService.GetEditCategory(id);
+                if (dt.Rows.Count > 0)
+                {
+                    br.ChooseMagazinelst = BindMagazine();
+                    br.ChooseMagazine = dt.Rows[0]["book_id"].ToString();
+                    br.Catageroy = dt.Rows[0]["cat_id"].ToString();
+                    br.Tamil = dt.Rows[0]["Tamil_cat"].ToString();
+                    br.ID = id;
 
+                }
             }
             return View(br);
 
@@ -107,15 +118,14 @@ namespace Kungumam.Controllers.Admin
                 string EditRow = string.Empty;
 
 
-                EditRow = "<a href=Category?id=" + dtUsers.Rows[i]["cat_id"].ToString() + "><img src='../Images/editing-icon-vector.jpg' alt='Edit' width='30' /></a>";
-                DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["cat_id"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate' width='20' /></a>";
+                EditRow = "<a href=Category?id=" + dtUsers.Rows[i]["cat_id"].ToString() + "><img src='../Images/edit.png' alt='Edit' width='20' /></a>";
+                DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["cat_id"].ToString() + "><img src='../Images/trash.png' alt='Deactivate' width='20' /></a>";
 
 
                 Reg.Add(new Categorygrid
                 {
                     id = Convert.ToInt64(dtUsers.Rows[i]["cat_id"].ToString()),
-                    chooseMagazine = dtUsers.Rows[i]["book_id"].ToString(),
-                    category = dtUsers.Rows[i]["cat_id"].ToString(),
+                    bookid = dtUsers.Rows[i]["book_id"].ToString(),
                     cname = dtUsers.Rows[i]["ctmne"].ToString(),
                     tamilcat = dtUsers.Rows[i]["Tamil_cat"].ToString(),
                     editrow = EditRow,

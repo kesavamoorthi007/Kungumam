@@ -14,6 +14,16 @@ namespace Kungumam.Services.Admin
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
         }
+        public DataTable GetEditCategory(string id)
+        {
+            string SvSql = string.Empty;
+            SvSql = "SELECT book_id,cat_id,ctmne,Tamil_cat FROM category where cat_id = '" + id + "'";
+            DataTable dtt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            adapter.Fill(dtt);
+            return dtt;
+        }
         public DataTable GetMagazine()
         {
             string SvSql = string.Empty;
@@ -53,7 +63,7 @@ namespace Kungumam.Services.Admin
                     }
                     else
                     {
-                        svSQL = "Update category set book_id = '" + Cy.ChooseMagazine + "',ctmne = '" + Cy.Catageroy + "',ctmne = '" + Cy.Tamil + "' WHERE category.cat_id ='" + Cy.ID + "'";
+                        svSQL = "Update category set book_id = '" + Cy.ChooseMagazine + "',ctmne = '" + Cy.Catageroy + "',Tamil_cat = '" + Cy.Tamil + "' WHERE category.cat_id ='" + Cy.ID + "'";
                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                         objCmds.ExecuteNonQuery();
                     }

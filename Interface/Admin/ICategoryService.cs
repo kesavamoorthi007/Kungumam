@@ -9,5 +9,6 @@ namespace Kungumam.Interface.Admin
         string StatusDeleteMR(string tag, int id);
         DataTable GetAllCategory(string strStatus);
         DataTable GetMagazine();
+        DataTable GetEditCategory(string id);
     }
 }

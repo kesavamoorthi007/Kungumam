@@ -37,7 +37,17 @@ namespace Kungumam.Controllers
             }
             else
             {
-               
+                DataTable dt = new DataTable();
+                dt = WrapperService.GetEditWrapper(id);
+                if (dt.Rows.Count > 0)
+                {
+                    br.ChooseMagazinelst = BindMagazine();
+                    br.ChooseMagazine = dt.Rows[0]["book_id"].ToString();
+                    br.IssueDate = dt.Rows[0]["AddedDateFormatted"].ToString();
+                    br.ID = id;
+                }
+                return View(br);
+
             }
             return View(br);
 
@@ -114,8 +124,8 @@ namespace Kungumam.Controllers
                 string EditRow = string.Empty;
 
 
-                EditRow = "<a href=Wrapper?id=" + dtUsers.Rows[i]["wrapper_id"].ToString() + "><img src='../Images/editing-icon-vector.jpg' alt='Edit' width='30' /></a>";
-                DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["wrapper_id"].ToString() + "><img src='../Images/Inactive.png' alt='Deactivate' width='20' /></a>";
+                EditRow = "<a href=Wrapper?id=" + dtUsers.Rows[i]["wrapper_id"].ToString() + "><img src='../Images/edit.png' alt='Edit' width='20' /></a>";
+                DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["wrapper_id"].ToString() + "><img src='../Images/trash.png' alt='Deactivate' width='20' /></a>";
 
 
                 Reg.Add(new Wrappergrid

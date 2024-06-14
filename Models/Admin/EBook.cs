@@ -24,6 +24,7 @@ namespace Kungumam.Models
     {
         public long id { get; set; }
         public string book { get; set; }
+        public string chooseMagazine { get; set; }
         public string url { get; set; }
         public string issueDate { get; set; }
         public string endDate { get; set; }
