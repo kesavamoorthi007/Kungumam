@@ -41,9 +41,9 @@
             },
             datafields: [
 
-                { name: 'bookid', type: 'string' },
-                { name: 'cname', type: 'string' },
-                { name: 'tamilcat', type: 'string' },
+                { name: 'book', type: 'string' },
+                { name: 'name', type: 'string' },
+                { name: 'tamil', type: 'string' },
                 { name: 'editrow', type: 'string' },
                 { name: 'delrow', type: 'string' },
 
@@ -83,9 +83,9 @@
 
                 columns: [
 
-                    { text: 'Magazine', filtertype: 'checkedlist', datafield: 'bookid', width: 100 },
-                    { text: 'Category Name', filtertype: 'checkedlist', datafield: 'cname', width: 250 },
-                    { text: 'Category Name(Tamil)', filtertype: 'input', datafield: 'tamilcat', width: 250 },
+                    { text: 'Magazine', filtertype: 'checkedlist', datafield: 'book', width: 100 },
+                    { text: 'Category Name', filtertype: 'checkedlist', datafield: 'name', width: 250 },
+                    { text: 'Category Name(Tamil)', filtertype: 'input', datafield: 'tamil', width: 250 },
                     { text: 'Edit', datafield: 'editrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                     { text: 'Delete', datafield: 'delrow', sortable: false, exportable: false, filterable: false, groupable: false, autoshowfiltericon: false, cellsalign: 'center', width: 70 },
                 ]

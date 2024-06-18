@@ -125,9 +125,9 @@ namespace Kungumam.Controllers.Admin
                 Reg.Add(new Categorygrid
                 {
                     id = Convert.ToInt64(dtUsers.Rows[i]["cat_id"].ToString()),
-                    bookid = dtUsers.Rows[i]["book_id"].ToString(),
-                    cname = dtUsers.Rows[i]["ctmne"].ToString(),
-                    tamilcat = dtUsers.Rows[i]["Tamil_cat"].ToString(),
+                    book = dtUsers.Rows[i]["book_id"].ToString(),
+                    name = dtUsers.Rows[i]["ctmne"].ToString(),
+                    tamil = dtUsers.Rows[i]["Tamil_cat"].ToString(),
                     editrow = EditRow,
                     delrow = DeleteRow,
 
