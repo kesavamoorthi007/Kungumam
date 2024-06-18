@@ -113,7 +113,7 @@ namespace Kungumam.Controllers
                 string EditRow = string.Empty;
 
 
-                EditRow = "<a href=Magazine?id=" + dtUsers.Rows[i]["book_id"].ToString() + "><img src='../Images/edit.png' alt='Edit' width='30' /></a>";
+                EditRow = "<a href=Magazine?id=" + dtUsers.Rows[i]["book_id"].ToString() + "><img src='../Images/edit.png' alt='Edit' width='20' /></a>";
 
 
                 Reg.Add(new Magazinegrid
