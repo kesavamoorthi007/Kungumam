@@ -21,13 +21,11 @@ namespace Kungumam.Models
     {
 
         public long id { get; set; }
-        public string bookid { get; set; }
-        public string chooseMagazine { get; set; }
-        public string category { get; set; }
-        public string cname { get; set; }
-        public string tamilcat { get; set; }
+        public string book { get; set; }
+        public string tamil { get; set; }
+        public string name { get; set; }
         public string editrow { get; set; }
         public string delrow { get; set; }
-        public string? ChooseMagazine { get; internal set; }
+       
     }
 }
