@@ -41,7 +41,7 @@ namespace Kungumam.Controllers.Admin
                     br.ChooseMagazinelst = BindMagazine();
                     br.ChooseMagazine = dt.Rows[0]["book_id"].ToString();
                     br.Categorylist = BindCategory();
-                    br.Catageroy = dt.Rows[0]["ctmne"].ToString();
+                    br.Catageroy = dt.Rows[0]["cat_id"].ToString();
                     br.SubCategeroy = dt.Rows[0]["sbctmne"].ToString();
                     br.ID = id;
 
@@ -50,12 +50,6 @@ namespace Kungumam.Controllers.Admin
             return View(br);
 
         }
-
-        private List<SelectListItem> BindCategory()
-        {
-            throw new NotImplementedException();
-        }
-
         public IActionResult ListSubCategory()
         {
             return View();
@@ -120,11 +114,11 @@ namespace Kungumam.Controllers.Admin
                 throw ex;
             }
         }
-        public List<SelectListItem> BindCategory(string id)
+        public List<SelectListItem> BindCategory()
         {
             try
             {
-                DataTable dtDesg = SubCategoryService.GetAllCategory(id);
+                DataTable dtDesg = SubCategoryService.GetAllCategory();
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
@@ -157,8 +151,8 @@ namespace Kungumam.Controllers.Admin
                 Reg.Add(new SubCategorygrid
                 {
                     id = Convert.ToInt64(dtUsers.Rows[i]["subcat_id"].ToString()),
-                    bookid = dtUsers.Rows[i]["book_id"].ToString(),
-                    category = dtUsers.Rows[i]["cat_id"].ToString(),
+                    bookid = dtUsers.Rows[i]["book_name"].ToString(),
+                    category = dtUsers.Rows[i]["ctmne"].ToString(),
                     sbctmne = dtUsers.Rows[i]["sbctmne"].ToString(),
                     editrow = EditRow,
                     delrow = DeleteRow,

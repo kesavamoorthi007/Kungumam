@@ -16,18 +16,17 @@ namespace Kungumam.Services.Admin
         public DataTable GetMagazine()
         {
             string SvSql = string.Empty;
-            SvSql = "select book_id,book_name from book";
+            SvSql = "select book_id,book_name from book ";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
             adapter.Fill(dtt);
             return dtt;
         }
-        
-        public DataTable GetAllCategory()
+        public DataTable GetAllCategory(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT cat_id,book_id,ctmne FROM category ";
+            SvSql = "SELECT cat_id,book_id,ctmne FROM category where book_id =  '" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -35,10 +34,10 @@ namespace Kungumam.Services.Admin
             return dtt;
         }
 
-        public DataTable GetAllSubCategory()
+        public DataTable GetAllSubCategory(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT subcat_id,sbctmne,book_id FROM sctegy ";
+            SvSql = "SELECT subcat_id,sbctmne,book_id FROM sctegy where book_id =  '" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);

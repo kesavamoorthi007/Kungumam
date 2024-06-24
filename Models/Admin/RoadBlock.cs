@@ -4,7 +4,6 @@ namespace Kungumam.Models
 {
     public class RoadBlock
     {
-        
         public string ID { get; set; }
        
         public string url { get; set; }
@@ -16,10 +15,6 @@ namespace Kungumam.Models
     }
     public class RoadBlockgrid
     {
-
-        internal string? chooseMagazine;
-       
-
         public long id { get; set; }
         public string urlRoadBlock { get; set; }
         public string imageRoadBlock { get; set; }

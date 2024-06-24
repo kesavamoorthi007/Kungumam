@@ -26,17 +26,7 @@ namespace Kungumam.Services
         public DataTable GetEditRoadBlock(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT rd_id,url,img,issue_dt,end_dt FROM rd_blk where url = '" + id + "'";
-            DataTable dtt = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
-            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-            adapter.Fill(dtt);
-            return dtt;
-        }
-        public DataTable GetMagazine()
-        {
-            string SvSql = string.Empty;
-            SvSql = "select book_id,book_name from book";
+            SvSql = "SELECT rd_id,url,img,CONVERT(varchar, rd_blk.issue_dt, 106) AS AddedDateFormatted,CONVERT(varchar, rd_blk.end_dt, 106) AS AddedDateFormatted1 FROM rd_blk where rd_id = '" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -113,7 +103,7 @@ namespace Kungumam.Services
         public DataTable GetAllRoadBlock(string strStatus)
         {
             string SvSql = string.Empty;
-            if (strStatus == "Y" || strStatus == null)
+            if (strStatus == "y" || strStatus == null)
             {
                 SvSql = "SELECT rd_id,url,img,CONVERT(varchar, rd_blk.issue_dt, 106) AS AddedDateFormatted,CONVERT(varchar, rd_blk.end_dt, 106) AS AddedDateFormatted1 from rd_blk where rd_blk.flag='y' ORDER BY rd_id DESC ";
             }
@@ -131,7 +121,6 @@ namespace Kungumam.Services
 
         public string StatusDeleteMR(string tag, int id)
         {
-
             try
             {
                 string svSQL = string.Empty;

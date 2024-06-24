@@ -41,8 +41,8 @@ namespace Kungumam.Controllers.Admin
                     br.ChooseMagazinelst = BindMagazine();
                     br.ChooseMagazine = dt.Rows[0]["book_id"].ToString();
                     br.url = dt.Rows[0]["url"].ToString();
-                    br.IssueDate = dt.Rows[0]["issue_dt"].ToString();
-                    br.EndDate = dt.Rows[0]["end_dt"].ToString();
+                    br.IssueDate = dt.Rows[0]["AddedDateFormatted"].ToString();
+                    br.EndDate = dt.Rows[0]["AddedDateFormatted1"].ToString();
                     br.ID = id;
 
 
@@ -115,7 +115,7 @@ namespace Kungumam.Controllers.Admin
         {
             List<EBook2grid> Reg = new List<EBook2grid>();
             DataTable dtUsers = new DataTable();
-            strStatus = strStatus == "" ? "Y" : strStatus;
+            strStatus = strStatus == "" ? "y" : strStatus;
             dtUsers = EBook2Service.GetAllEBook2(strStatus);
             for (int i = 0; i < dtUsers.Rows.Count; i++)
             {
@@ -124,14 +124,14 @@ namespace Kungumam.Controllers.Admin
                 string EditRow = string.Empty;
 
 
-                EditRow = "<a href=ebook?id=" + dtUsers.Rows[i]["news_id"].ToString() + "><img src='../Images/edit.png' alt='Edit' width='20' /></a>";
+                EditRow = "<a href=EBook2?id=" + dtUsers.Rows[i]["news_id"].ToString() + "><img src='../Images/edit.png' alt='Edit' width='20' /></a>";
                 DeleteRow = "<a href=DeleteMR?id=" + dtUsers.Rows[i]["news_id"].ToString() + "><img src='../Images/trash.png' alt='Deactivate' width='20' /></a>";
 
 
                 Reg.Add(new EBook2grid
                 {
                     id = Convert.ToInt64(dtUsers.Rows[i]["news_id"].ToString()),
-                    book = dtUsers.Rows[i]["book_id"].ToString(),
+                    book = dtUsers.Rows[i]["book_name"].ToString(),
                     url = dtUsers.Rows[i]["url"].ToString(),
                     issueDate = dtUsers.Rows[i]["AddedDateFormatted"].ToString(),
                     endDate = dtUsers.Rows[i]["AddedDateFormatted1"].ToString(),
@@ -153,12 +153,12 @@ namespace Kungumam.Controllers.Admin
             if (string.IsNullOrEmpty(flag))
             {
 
-                return RedirectToAction("List EBook2");
+                return RedirectToAction("ListEBook2");
             }
             else
             {
                 TempData["notice"] = flag;
-                return RedirectToAction("List EBook2");
+                return RedirectToAction("ListEBook2");
             }
         }
 

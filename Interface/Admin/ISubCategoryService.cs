@@ -11,7 +11,7 @@ namespace Kungumam.Interface.Admin
 
         DataTable GetAllListCategory(string strStatus);
         DataTable GetMagazine();
-        DataTable GetAllCategory(string id);
+        DataTable GetAllCategory();
         DataTable GetEditSubCategory(string id);
     }
 }

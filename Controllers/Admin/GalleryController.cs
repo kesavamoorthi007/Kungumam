@@ -30,8 +30,8 @@ namespace Kungumam.Controllers.Admin
 
             Gallery br = new Gallery();
             br.ChooseMagazinelst = BindMagazine();
-            br.ChooseCategory = BindCategory();
-            br.ChooseSubCategory = BindSubCategory();
+            br.ChooseCategory = BindCategory("");
+            br.ChooseSubCategory = BindSubCategory("");
 
 
             if (id == null)
@@ -67,11 +67,11 @@ namespace Kungumam.Controllers.Admin
                 throw ex;
             }
         }
-        public List<SelectListItem> BindCategory()
+        public List<SelectListItem> BindCategory(string id)
         {
             try
             {
-                DataTable dtDesg = GalleryService.GetAllCategory();
+                DataTable dtDesg = GalleryService.GetAllCategory(id);
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
@@ -84,11 +84,11 @@ namespace Kungumam.Controllers.Admin
                 throw ex;
             }
         }
-        public List<SelectListItem> BindSubCategory()
+        public List<SelectListItem> BindSubCategory(string id)
         {
             try
             {
-                DataTable dtDesg = GalleryService.GetAllSubCategory();
+                DataTable dtDesg = GalleryService.GetAllSubCategory(id);
                 List<SelectListItem> lstdesg = new List<SelectListItem>();
                 for (int i = 0; i < dtDesg.Rows.Count; i++)
                 {
@@ -100,6 +100,20 @@ namespace Kungumam.Controllers.Admin
             {
                 throw ex;
             }
+        }
+        public JsonResult GetCategoryJSON(string supid)
+        {
+            Gallery model = new Gallery();
+            model.ChooseCategory = BindCategory(supid);
+            return Json(BindCategory(supid));
+
+        }
+        public JsonResult GetSubCategoryJSON(string supid)
+        {
+            Gallery model = new Gallery();
+            model.ChooseSubCategory = BindSubCategory(supid);
+            return Json(BindSubCategory(supid));
+
         }
 
     }

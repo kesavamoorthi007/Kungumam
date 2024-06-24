@@ -75,13 +75,13 @@ namespace Kungumam.Services.Admin
         public DataTable GetAllCategory(string strStatus)
         {
             string SvSql = string.Empty;
-            if (strStatus == "Y" || strStatus == null)
+            if (strStatus == "y" || strStatus == null)
             {
-                SvSql = "SELECT book_id,cat_id,ctmne,Tamil_cat FROM category WHERE flag ='y' ORDER BY cat_id";
+                SvSql = "select book.book_name,wrapper_id,book_wrapper,CONVERT(varchar, book_wrapper.issue_dt, 106) AS AddedDateFormatted from book_wrapper LEFT OUTER JOIN book ON book.book_id=book_wrapper.book_id where book_wrapper.flag='y' ORDER BY wrapper_id DESC";
             }
             else
             {
-                SvSql = "SELECT book_id,cat_id,ctmne,Tamil_cat FROM category WHERE flag ='N' ORDER BY cat_id";
+                SvSql = "select book.book_name,wrapper_id,book_wrapper,CONVERT(varchar, book_wrapper.issue_dt, 106) AS AddedDateFormatted from book_wrapper LEFT OUTER JOIN book ON book.book_id=book_wrapper.book_id where book_wrapper.flag='y' ORDER BY wrapper_id DESC";
             }
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
@@ -97,7 +97,7 @@ namespace Kungumam.Services.Admin
                 string svSQL = string.Empty;
                 using (SqlConnection objConnT = new SqlConnection(_connectionString))
                 {
-                    svSQL = "UPDATE category SET flag ='N' WHERE cat_id='" + id + "'";
+                    svSQL = "UPDATE category SET flag ='n' WHERE cat_id='" + id + "'";
                     SqlCommand objCmds = new SqlCommand(svSQL, objConnT);
                     objConnT.Open();
                     objCmds.ExecuteNonQuery();

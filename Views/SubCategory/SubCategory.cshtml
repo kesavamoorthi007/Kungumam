@@ -92,31 +92,11 @@
         </div>
     </div>
 </div>
-@*<script>
+<script>
     $(function () {
         $('._select').select2();
     });
-    function StateChange(itemid) {
-        //alert(itemid);
-        //debugger;
-        $.ajax({
-            url: "GetCategoryJSON",
-            type: "post",
-            data: { 'supid': itemid },
-            cache: false,
-            success: function (response) {
-                var newlist;
-                //alert(JSON.stringify(response));
-                newlist = response.Ilst;
-                PopulateDropDown("#ddlSubCategory", response);
-            },
-            error: function () {
-                debugger;
-                alert("Please Select Choose Magazine");
-            }
-        });
-    }
-</script>*@
+</script>
 <script>
     $(document).ready(function () {
         $('#btnSave').click(function (e) {

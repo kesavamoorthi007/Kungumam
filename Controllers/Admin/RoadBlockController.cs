@@ -43,10 +43,10 @@ namespace Kungumam.Controllers
                 if (dt.Rows.Count > 0)
                 {
 
-                    br.Url = dt.Rows[0]["url"].ToString();
+                    br.url = dt.Rows[0]["url"].ToString();
                     br.Image = dt.Rows[0]["img"].ToString();
-                    br.IssueDate = dt.Rows[0]["issue_dt"].ToString();
-                    br.end_dt = dt.Rows[0]["end_dt"].ToString();
+                    br.IssueDate = dt.Rows[0]["AddedDateFormatted"].ToString();
+                    br.end_dt = dt.Rows[0]["AddedDateFormatted1"].ToString();
                     br.ID = id;
 
 
@@ -58,7 +58,6 @@ namespace Kungumam.Controllers
         }
         public IActionResult ListRoadBlock()
         {
-
             return View();
         }
 
@@ -99,24 +98,6 @@ namespace Kungumam.Controllers
 
             return View(Cy);
         }
-        //public List<SelectListItem> BindMagazine()
-        //{
-        //    try
-        //    {
-        //        DataTable dtDesg = RoadBlockService.GetMagazine();
-        //        List<SelectListItem> lstdesg = new List<SelectListItem>();
-        //        for (int i = 0; i < dtDesg.Rows.Count; i++)
-        //        {
-        //            lstdesg.Add(new SelectListItem() { Text = dtDesg.Rows[i]["book_name"].ToString(), Value = dtDesg.Rows[i]["book_id"].ToString() });
-        //        }
-        //        return lstdesg;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
-
         public ActionResult MyListRoadBlockgrid(string strStatus)
 
         {
@@ -140,8 +121,8 @@ namespace Kungumam.Controllers
                     id = Convert.ToInt64(dtUsers.Rows[i]["rd_id"].ToString()),
                     urlRoadBlock = dtUsers.Rows[i]["url"].ToString(),
                     imageRoadBlock = dtUsers.Rows[i]["img"].ToString(),
-                    issusedate = dtUsers.Rows[i]["issue_dt"].ToString(),
-                    endate = dtUsers.Rows[i]["end_dt"].ToString(),
+                    issusedate = dtUsers.Rows[i]["AddedDateFormatted"].ToString(),
+                    endate = dtUsers.Rows[i]["AddedDateFormatted1"].ToString(),
                     editrow = EditRow,
                     delrow = DeleteRow,
 

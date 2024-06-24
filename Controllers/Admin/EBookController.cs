@@ -132,7 +132,7 @@ namespace Kungumam.Controllers.Admin
                 Reg.Add(new EBookgrid
                 {
                     id = Convert.ToInt64(dtUsers.Rows[i]["ebook_id"].ToString()),
-                    book = dtUsers.Rows[i]["book_id"].ToString(),
+                    book = dtUsers.Rows[i]["book_name"].ToString(),
                     url = dtUsers.Rows[i]["url"].ToString(),
                     issueDate = dtUsers.Rows[i]["AddedDateFormatted"].ToString(),
                     endDate = dtUsers.Rows[i]["AddedDateFormatted1"].ToString(),
