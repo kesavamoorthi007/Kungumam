@@ -15,10 +15,10 @@ namespace Kungumam.Services.Admin
             _connectionString = _configuratio.GetConnectionString("MySqlConnection");
             datatrans = new DataTransactions(_connectionString);
         }
-        public System.Data.DataTable GetEditEBook(string id)
+        public System.Data.DataTable GetEditEBook2(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT book_id,cat_id,news_id,issue_dt,end_dt,url,img FROM ihtoebk where cat_id = '" + id + "'";
+            SvSql = "SELECT book_id,cat_id,news_id,CONVERT(varchar, ihtoebk.issue_dt, 106) AS AddedDateFormatted, CONVERT(varchar, ihtoebk.end_dt, 106) AS AddedDateFormatted1,url,img FROM ihtoebk where ihtoebk.news_id = '" + id + "'";
             System.Data.DataTable dtt = new System.Data.DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -77,13 +77,13 @@ namespace Kungumam.Services.Admin
         public System.Data.DataTable GetAllEBook2(string strStatus)
         {
             string SvSql = string.Empty;
-            if (strStatus == "Y" || strStatus == null)
+            if (strStatus == "y" || strStatus == null)
             {
-                SvSql = "SELECT book_id, news_id, url, CONVERT(varchar, ihtoebk.issue_dt, 106) AS AddedDateFormatted, CONVERT(varchar, ihtoebk.end_dt, 106) AS AddedDateFormatted1 FROM ihtoebk WHERE flag = 'y' ORDER BY news_id";
+                SvSql = "SELECT book.book_name,category.ctmne,news_id,url, CONVERT(varchar, ihtoebk.issue_dt, 106) AS AddedDateFormatted, CONVERT(varchar, ihtoebk.end_dt, 106) AS AddedDateFormatted1 FROM ihtoebk LEFT OUTER JOIN category ON category.cat_id=ihtoebk.cat_id LEFT OUTER JOIN book ON book.book_id=ihtoebk.book_id WHERE ihtoebk.flag = 'y' ORDER BY ihtoebk.news_id";
             }
             else
             {
-                SvSql = "SELECT book_id,news_id,url,CONVERT(varchar, Book_url.issue_dt, 106) AS AddedDateFormatted,CONVERT(varchar, Book_url.end_dt, 106) AS AddedDateFormatted1 FROM ihtoebk WHERE flag ='N' ORDER BY news_id";
+                SvSql = "SELECT book.book_name,category.ctmne,news_id,url, CONVERT(varchar, ihtoebk.issue_dt, 106) AS AddedDateFormatted, CONVERT(varchar, ihtoebk.end_dt, 106) AS AddedDateFormatted1 FROM ihtoebk LEFT OUTER JOIN category ON category.cat_id=ihtoebk.cat_id LEFT OUTER JOIN book ON book.book_id=ihtoebk.book_id WHERE ihtoebk.flag = 'n' ORDER BY ihtoebk.news_id";
             }
             System.Data.DataTable dtt = new System.Data.DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
@@ -100,7 +100,7 @@ namespace Kungumam.Services.Admin
                 string svSQL = string.Empty;
                 using (SqlConnection objConnT = new SqlConnection(_connectionString))
                 {
-                    svSQL = "UPDATE ihtoebk SET flag ='N' WHERE cat_id='" + id + "'";
+                    svSQL = "UPDATE ihtoebk SET flag ='n' WHERE ihtoebk.news_id='" + id + "'";
                     SqlCommand objCmds = new SqlCommand(svSQL, objConnT);
                     objConnT.Open();
                     objCmds.ExecuteNonQuery();
@@ -115,9 +115,6 @@ namespace Kungumam.Services.Admin
             return "";
         }
 
-        public System.Data.DataTable GetEditEBook2(string id)
-        {
-            throw new NotImplementedException();
-        }
+     
     }
 }

@@ -38,7 +38,7 @@ namespace Kungumam.Controllers.Admin
                 {
                     br.ChooseMagazinelst = BindMagazine();
                     br.ChooseMagazine = dt.Rows[0]["book_id"].ToString();
-                    br.Catageroy = dt.Rows[0]["cat_id"].ToString();
+                    br.Catageroy = dt.Rows[0]["ctmne"].ToString();
                     br.Tamil = dt.Rows[0]["Tamil_cat"].ToString();
                     br.ID = id;
 
@@ -125,7 +125,7 @@ namespace Kungumam.Controllers.Admin
                 Reg.Add(new Categorygrid
                 {
                     id = Convert.ToInt64(dtUsers.Rows[i]["cat_id"].ToString()),
-                    book = dtUsers.Rows[i]["book_id"].ToString(),
+                    book = dtUsers.Rows[i]["book_name"].ToString(),
                     name = dtUsers.Rows[i]["ctmne"].ToString(),
                     tamil = dtUsers.Rows[i]["Tamil_cat"].ToString(),
                     editrow = EditRow,

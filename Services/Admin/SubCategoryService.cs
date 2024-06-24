@@ -18,7 +18,7 @@ namespace Kungumam.Services.Admin
         public DataTable GetEditSubCategory(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT book_id,cat_id,subcat_id,sbctmne FROM sctegy where cat_id = '" + id + "'";
+            SvSql = "SELECT book_id,cat_id,subcat_id,sbctmne FROM sctegy where subcat_id = '" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -43,15 +43,6 @@ namespace Kungumam.Services.Admin
                 string StatementType = string.Empty;
                 string svSQL = "";
 
-                //if (Cy.ID == null)
-                //{
-                //    svSQL = " SELECT Count(C_Name) as cnt FROM TMCategory_N WHERE C_Name = LTRIM(RTRIM('" + Cy.C_Name + "')) ";
-                //    if (datatrans.GetDataId(svSQL) > 0)
-                //    {
-                //        msg = "Category Name(Tamil) Already Existed";
-                //        return msg;
-                //    }
-                //}
                 using (SqlConnection objConn = new SqlConnection(_connectionString))
                 {
                     objConn.Open();
@@ -85,7 +76,7 @@ namespace Kungumam.Services.Admin
         public DataTable GetAllCategory()
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT cat_id,book_id,subcat_id FROM sctegy ";
+            SvSql = "SELECT ctmne,cat_id FROM category";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -95,13 +86,13 @@ namespace Kungumam.Services.Admin
         public DataTable GetAllListCategory(string strStatus)
         {
             string SvSql = string.Empty;
-            if (strStatus == "Y" || strStatus == null)
+            if (strStatus == "y" || strStatus == null)
             {
-                SvSql = "SELECT book_id,cat_id,subcat_id,sbctmne FROM sctegy WHERE flag ='y' ORDER BY cat_id";
+                SvSql = "SELECT book.book_name,category.ctmne,subcat_id,sbctmne FROM sctegy LEFT OUTER JOIN book ON book.book_id=sctegy.book_id LEFT OUTER JOIN category ON category.cat_id=sctegy.cat_id WHERE sctegy.flag ='y' ORDER BY sctegy.cat_id";
             }
             else
             {
-                SvSql = "SELECT book_id,cat_id,subcat_id,sbctmne FROM sctegy WHERE flag ='N' ORDER BY cat_id";
+                SvSql = "SELECT book.book_name,category.ctmne,subcat_id,sbctmne FROM sctegy LEFT OUTER JOIN book ON book.book_id=sctegy.book_id LEFT OUTER JOIN category ON category.cat_id=sctegy.cat_id WHERE sctegy.flag ='n' ORDER BY sctegy.cat_id";
             }
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
@@ -117,7 +108,7 @@ namespace Kungumam.Services.Admin
                 string svSQL = string.Empty;
                 using (SqlConnection objConnT = new SqlConnection(_connectionString))
                 {
-                    svSQL = "UPDATE sctegy SET flag ='N' WHERE subcat_id='" + id + "'";
+                    svSQL = "UPDATE sctegy SET flag ='n' WHERE subcat_id='" + id + "'";
                     SqlCommand objCmds = new SqlCommand(svSQL, objConnT);
                     objConnT.Open();
                     objCmds.ExecuteNonQuery();
@@ -131,10 +122,6 @@ namespace Kungumam.Services.Admin
             }
             return "";
         }
-
-        public DataTable GetAllCategory(string id)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

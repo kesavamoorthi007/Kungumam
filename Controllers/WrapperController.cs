@@ -131,7 +131,7 @@ namespace Kungumam.Controllers
                 Reg.Add(new Wrappergrid
                 {
                     id = Convert.ToInt64(dtUsers.Rows[i]["wrapper_id"].ToString()),
-                    bookid = dtUsers.Rows[i]["book_id"].ToString(),
+                    bookid = dtUsers.Rows[i]["book_name"].ToString(),
                     bookwrapper = dtUsers.Rows[i]["book_wrapper"].ToString(),
                     issusedate = dtUsers.Rows[i]["AddedDateFormatted"].ToString(),
                     editrow = EditRow,

@@ -6,7 +6,7 @@ namespace Kungumam.Interface.Admin
     public interface IGalleryService
     {
         DataTable GetMagazine();
-        DataTable GetAllCategory();
-        DataTable GetAllSubCategory();
+        DataTable GetAllCategory(string id);
+        DataTable GetAllSubCategory(string id);
     }
 }

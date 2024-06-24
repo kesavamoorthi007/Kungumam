@@ -18,7 +18,7 @@ namespace Kungumam.Services.Admin
         public DataTable GetEditEBook(string id)
         {
             string SvSql = string.Empty;
-            SvSql = "SELECT book_id,ebook_id,url,issue_dt,end_dt FROM Book_url where ebook_id = '" + id + "'";
+            SvSql = "SELECT book_id,ebook_id,url,CONVERT(varchar, Book_url.issue_dt, 106) AS AddedDateFormatted,CONVERT(varchar, Book_url.end_dt, 106) AS AddedDateFormatted1 FROM Book_url where ebook_id = '" + id + "'";
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
@@ -49,14 +49,14 @@ namespace Kungumam.Services.Admin
                     objConn.Open();
                     if (Cy.ID == null)
                     {
-                        svSQL = "Insert into Book_url (book_id,ebook_id,url,issue_dt,end_dt,dt,flag) VALUES ('" + Cy.ChooseMagazine + "','" + Cy.id + "','" + Cy.url + "','" + Cy.IssueDate + "','" + Cy.EndDate + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','y')";
+                        svSQL = "Insert into Book_url (book_id,url,issue_dt,end_dt,dt,flag) VALUES ('" + Cy.ChooseMagazine + "','" + Cy.url + "','" + Cy.IssueDate + "','" + Cy.EndDate + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','y')";
                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                         objCmds.ExecuteNonQuery();
 
                     }
                     else
                     {
-                        svSQL = "Update Book_url set book_id = '" + Cy.ChooseMagazine + "',ebook_id = '" + Cy.id + "',url = '" + Cy.url + "',issue_dt = '" + Cy.IssueDate + "',end_dt = '" + Cy.EndDate + "' WHERE Book_url.ebook_id ='" + Cy.ID + "'";
+                        svSQL = "Update Book_url set book_id = '" + Cy.ChooseMagazine + "',url = '" + Cy.url + "',issue_dt = '" + Cy.IssueDate + "',end_dt = '" + Cy.EndDate + "' WHERE Book_url.ebook_id ='" + Cy.ID + "'";
                         SqlCommand objCmds = new SqlCommand(svSQL, objConn);
                         objCmds.ExecuteNonQuery();
                     }
@@ -78,13 +78,13 @@ namespace Kungumam.Services.Admin
         public DataTable GetAllEBook(string strStatus)
         {
             string SvSql = string.Empty;
-            if (strStatus == "Y" || strStatus == null)
+            if (strStatus == "y" || strStatus == null)
             {
-                SvSql = "  SELECT book_id,ebook_id,url,CONVERT(varchar, Book_url.issue_dt, 106) AS AddedDateFormatted,CONVERT(varchar, Book_url.end_dt, 106) AS AddedDateFormatted1 FROM Book_url WHERE flag ='y' ORDER BY book_id";
+                SvSql = "  SELECT book.book_name,ebook_id,url,CONVERT(varchar, Book_url.issue_dt, 106) AS AddedDateFormatted,CONVERT(varchar, Book_url.end_dt, 106) AS AddedDateFormatted1 FROM Book_url LEFT OUTER JOIN book ON book.book_id=Book_url.book_id WHERE Book_url.flag ='y' ORDER BY ebook_id";
             }
             else
             {
-                SvSql = "  SELECT book_id,ebook_id,url,CONVERT(varchar, Book_url.issue_dt, 106) AS AddedDateFormatted,CONVERT(varchar, Book_url.end_dt, 106) AS AddedDateFormatted1 FROM Book_url WHERE flag ='N' ORDER BY book_id";
+                SvSql = "  SELECT book.book_name,ebook_id,url,CONVERT(varchar, Book_url.issue_dt, 106) AS AddedDateFormatted,CONVERT(varchar, Book_url.end_dt, 106) AS AddedDateFormatted1 FROM Book_url LEFT OUTER JOIN book ON book.book_id=Book_url.book_id WHERE Book_url.flag ='N' ORDER BY ebook_id";
             }
             DataTable dtt = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(SvSql, _connectionString);
